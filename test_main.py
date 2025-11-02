@@ -1,7 +1,6 @@
 import unittest
 from main import find_matching_sequences
 
-
 class TestMain(unittest.TestCase):
     def test_main_1(self):
         matrix = [
@@ -36,6 +35,7 @@ class TestMain(unittest.TestCase):
         ]
         buffer_size = 6
         find_matching_sequences(matrix, daemons, buffer_size)
+
 
 if __name__ == "__main__":
     unittest.main()
