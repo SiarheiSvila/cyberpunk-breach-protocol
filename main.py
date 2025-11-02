@@ -1,8 +1,8 @@
 from typing import List, Dict, Tuple
 
-from find_sequences import all_merged_sequences
-from find_match_in_matrix import find_sequence_path
-from cover_finder import find_minimum_cover
+from helpers.find_sequences import all_merged_sequences
+from helpers.find_match_in_matrix import find_sequence_path
+from helpers.cover_finder import find_minimum_cover
 
 
 def print_sequences(sequences: List[Tuple[Tuple[int, ...], Dict]], matrix: List[List[str]]):
