@@ -10,9 +10,10 @@ def all_merged_sequences(daemons: list[list[str]], buffer_size: int):
     def overlap_merge(seq1, seq2):
         """Merge two sequences with maximal suffix-prefix overlap."""
         max_overlap = 0
-        for i in range(1, min(len(seq1), len(seq2)) + 1):
+        for i in range(min(len(seq1), len(seq2)), 0, -1):
             if seq1[-i:] == seq2[:i]:
                 max_overlap = i
+                break
         return seq1 + seq2[max_overlap:]
 
 
@@ -24,8 +25,8 @@ def all_merged_sequences(daemons: list[list[str]], buffer_size: int):
                 return True
         return False
 
+    shortest_sequences = {}
 
-    results = {}
     for r in range(1, len(daemons) + 1):
         for order in permutations(range(len(daemons)), r):
             merged = daemons[order[0]]
@@ -34,13 +35,10 @@ def all_merged_sequences(daemons: list[list[str]], buffer_size: int):
                 if len(merged) > buffer_size:
                     break
             else:
-                # Determine which daemons are fully contained
-                covered = [i for i, d in enumerate(daemons) if contains_subsequence(merged, d)]
-                covered_key = tuple(merged)
-                results[covered_key] = {
-                    "sequence": merged,
-                    "covers": covered,
-                    "count": len(covered)
-                }
+                covered = tuple(sorted([i for i, d in enumerate(daemons) if contains_subsequence(merged, d)]))
 
-    return {tuple(r["covers"]): r["sequence"] for r in results.values()}
+                if covered:
+                    if covered not in shortest_sequences or len(merged) < len(shortest_sequences[covered]):
+                        shortest_sequences[covered] = merged
+
+    return shortest_sequences
