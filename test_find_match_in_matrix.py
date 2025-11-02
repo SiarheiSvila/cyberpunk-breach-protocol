@@ -29,5 +29,32 @@ class TestFindMatchInMatrix(unittest.TestCase):
         result = find_sequence_path(matrix, sequence, buffer_size)
         self.assertEqual(result, [])
 
+    def test_empty_matrix(self):
+        matrix = []
+        sequence = ["1C", "55", "BD"]
+        buffer_size = 5
+
+        with self.assertRaises(IndexError):
+            find_sequence_path(matrix, sequence, buffer_size)
+
+    def test_sequence_found_multiple_times(self):
+        matrix = [
+            ['1C', '55', 'BD', '1C', '55'],
+            ['BD', '1C', '55', 'BD', '1C'],
+            ['55', 'BD', '1C', '55', 'BD']
+        ]
+        sequence = ["1C", "55", "BD"]
+        buffer_size = 3
+
+        possible_paths = [
+            [(0, 0), (0, 1), (0, 2)],
+            [(1, 1), (1, 2), (1, 3)],
+            [(2, 2), (2, 3), (2, 4)],
+            [(0, 0), (2, 0), (2, 1)]
+        ]
+
+        result = find_sequence_path(matrix, sequence, buffer_size)
+        self.assertIn(result, possible_paths)
+
 if __name__ == "__main__":
     unittest.main()
