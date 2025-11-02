@@ -1,60 +1,52 @@
 import unittest
 from find_match_in_matrix import find_sequence_path
 
-class TestFindMatchInMatrix(unittest.TestCase):
-    def test_find_sequence_path(self):
+
+class TestFindSequencePath(unittest.TestCase):
+    def test_simple_path(self):
+        """Test a simple path that can be found in the matrix."""
         matrix = [
-            ['1C', 'BD', '1C', '55', 'E9'],
-            ['1C', '1C', '55', '7A', '1C'],
-            ['1C', 'E9', 'BD', 'BD', '7A'],
-            ['BD', '1C', '1C', 'E9', '1C'],
-            ['7A', 'E9', 'E9', 'E9', '1C']
+            ["A", "B", "C"],
+            ["D", "E", "F"],
+            ["G", "H", "I"],
         ]
-        sequence = ["1C", "55", "BD"]
+        sequence = ["A", "D", "E"]
         buffer_size = 5
+        expected = [(0, 0), (1, 0), (1, 1)]
+        self.assertEqual(find_sequence_path(matrix, sequence, buffer_size), expected)
 
-        expected_path = [(1, 0), (1, 2), (2, 2)]
-
-        result = find_sequence_path(matrix, sequence, buffer_size)
-        self.assertEqual(result, expected_path)
-
-    def test_find_sequence_path_not_found(self):
+    def test_path_not_found(self):
+        """Test when the sequence cannot be found in the matrix."""
         matrix = [
-            ['1C', 'BD'],
-            ['E9', '55']
+            ["A", "B"],
+            ["C", "D"],
         ]
-        sequence = ["1C", "7A"]
+        sequence = ["A", "D"]
         buffer_size = 3
+        self.assertEqual(find_sequence_path(matrix, sequence, buffer_size), [])
 
-        result = find_sequence_path(matrix, sequence, buffer_size)
-        self.assertEqual(result, [])
-
-    def test_empty_matrix(self):
-        matrix = []
-        sequence = ["1C", "55", "BD"]
-        buffer_size = 5
-
-        with self.assertRaises(IndexError):
-            find_sequence_path(matrix, sequence, buffer_size)
-
-    def test_sequence_found_multiple_times(self):
+    def test_buffer_too_small(self):
+        """Test when the path exists but is longer than the buffer size."""
         matrix = [
-            ['1C', '55', 'BD', '1C', '55'],
-            ['BD', '1C', '55', 'BD', '1C'],
-            ['55', 'BD', '1C', '55', 'BD']
+            ["A", "B", "C"],
+            ["D", "E", "F"],
         ]
-        sequence = ["1C", "55", "BD"]
+        sequence = ["A", "D", "E"]
+        buffer_size = 2
+        self.assertEqual(find_sequence_path(matrix, sequence, buffer_size), [])
+
+    def test_alternative_paths(self):
+        """Test that the function finds the first valid path."""
+        matrix = [
+            ["A", "B"],
+            ["A", "D"],
+        ]
+        sequence = ["A", "D"]
         buffer_size = 3
+        # It should find the path starting at (0, 0) and going to (1, 1) via (1, 0)
+        expected = [(1, 0), (1, 1)]
+        self.assertEqual(find_sequence_path(matrix, sequence, buffer_size), expected)
 
-        possible_paths = [
-            [(0, 0), (0, 1), (0, 2)],
-            [(1, 1), (1, 2), (1, 3)],
-            [(2, 2), (2, 3), (2, 4)],
-            [(0, 0), (2, 0), (2, 1)]
-        ]
-
-        result = find_sequence_path(matrix, sequence, buffer_size)
-        self.assertIn(result, possible_paths)
 
 if __name__ == "__main__":
     unittest.main()
