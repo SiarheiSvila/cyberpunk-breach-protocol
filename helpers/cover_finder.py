@@ -1,3 +1,7 @@
+"""
+This module provides functions to find the minimum set of sequences
+that cover the maximum number of daemons.
+"""
 from itertools import combinations
 from typing import List, Dict, Tuple, Set
 
@@ -49,7 +53,8 @@ def find_minimum_cover(
     # A set of all daemon indices, e.g., {0, 1, 2} for 3 daemons
     all_daemons = set(range(num_daemons))
 
-    # Create a list of tuples, each containing daemon indices, a set of these indices, and sequence info
+    # Create a list of tuples, each containing daemon indices, a set of these indices,
+    # and sequence info
     sequence_items = [
         (indices, set(indices), info) for indices, info in found_sequences.items()
     ]

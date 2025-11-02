@@ -1,3 +1,8 @@
+"""
+This module provides functions for generating all valid merged sequences of daemons
+that are within a given buffer size. It explores all permutations of daemons,
+merges them, and checks for their validity.
+"""
 from itertools import permutations
 from typing import List, Dict, Tuple
 
@@ -39,12 +44,14 @@ def _contains_subsequence(sequence: List[str], subseq: List[str]) -> bool:
     n, m = len(sequence), len(subseq)
     # Slide a window of size m over the sequence to check for the subsequence
     for i in range(n - m + 1):
-        if sequence[i:i+m] == subseq:
+        if sequence[i : i + m] == subseq:
             return True
     return False
 
 
-def all_merged_sequences(daemons: List[List[str]], buffer_size: int) -> Dict[Tuple[int, ...], List[str]]:
+def all_merged_sequences(
+    daemons: List[List[str]], buffer_size: int
+) -> Dict[Tuple[int, ...], List[str]]:
     """
     Generates all valid merged sequences of daemons that are within the given buffer size.
 
@@ -79,14 +86,22 @@ def all_merged_sequences(daemons: List[List[str]], buffer_size: int) -> Dict[Tup
                     break
             else:  # This block executes if the for loop completes without a break
                 # Identify all daemons covered by the merged sequence
-                covered_daemons = tuple(sorted([
-                    daemon_indices[i] for i, d in enumerate(daemons) if _contains_subsequence(merged_sequence, d)
-                ]))
+                covered_daemons = tuple(
+                    sorted(
+                        [
+                            daemon_indices[i]
+                            for i, d in enumerate(daemons)
+                            if _contains_subsequence(merged_sequence, d)
+                        ]
+                    )
+                )
 
                 if covered_daemons:
-                    # If we found a new combination of covered daemons or a shorter sequence for an existing one
-                    if covered_daemons not in shortest_sequences or \
-                       len(merged_sequence) < len(shortest_sequences[covered_daemons]):
+                    # If we found a new combination of covered daemons or a shorter
+                    # sequence for an existing one
+                    if covered_daemons not in shortest_sequences or len(
+                        merged_sequence
+                    ) < len(shortest_sequences[covered_daemons]):
                         shortest_sequences[covered_daemons] = merged_sequence
 
     return shortest_sequences

@@ -1,3 +1,6 @@
+"""
+Main script to find the minimum set of sequences to cover all daemons in a matrix.
+"""
 from typing import List, Dict, Tuple
 
 from helpers.find_sequences import all_merged_sequences
@@ -33,7 +36,9 @@ def print_sequences(sequences: List[Tuple[Tuple[int, ...], Dict]], matrix: List[
             print(f"  {' '.join(row)}")
 
 
-def find_matching_sequences(matrix: List[List[str]], daemons: List[List[str]], buffer_size: int):
+def find_matching_sequences(
+    matrix: List[List[str]], daemons: List[List[str]], buffer_size: int
+):
     """
     Main orchestrator function.
     It finds all valid merged sequences, filters them, finds the minimum cover, and prints the result.
@@ -45,7 +50,9 @@ def find_matching_sequences(matrix: List[List[str]], daemons: List[List[str]], b
     found_sequences = {
         indices: {"sequence": sequence, "path": path}
         for indices, sequence in merged_sequences.items()
-        if (path := find_sequence_path(matrix, sequence, buffer_size))
+        if (path := find_sequence_path(  # pylint: disable=line-too-long
+            matrix, sequence, buffer_size
+        ))
     }
 
     # Step 3: Find the minimum set of sequences to cover all (or as many as possible) daemons
