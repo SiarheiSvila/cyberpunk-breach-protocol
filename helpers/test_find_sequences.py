@@ -1,8 +1,15 @@
+"""
+Unit tests for the find_sequences module.
+"""
 import unittest
-from find_sequences import all_merged_sequences
+from helpers.find_sequences import all_merged_sequences
 
 
 class TestAllMergedSequences(unittest.TestCase):
+    """
+    Test suite for the all_merged_sequences function.
+    """
+
     def test_empty_daemons(self):
         """Test with an empty list of daemons."""
         self.assertEqual(all_merged_sequences([], 5), {})

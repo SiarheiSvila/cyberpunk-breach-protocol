@@ -1,8 +1,15 @@
+"""
+Unit tests for the cover_finder module.
+"""
 import unittest
-from cover_finder import find_minimum_cover
+from helpers.cover_finder import find_minimum_cover
 
 
 class TestFindMinimumCover(unittest.TestCase):
+    """
+    Test suite for the find_minimum_cover function.
+    """
+
     def test_empty_case(self):
         """Test with no found sequences."""
         self.assertEqual(find_minimum_cover({}, 5), [])

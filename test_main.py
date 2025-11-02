@@ -1,8 +1,19 @@
+"""
+Unit tests for the main script.
+"""
 import unittest
 from main import find_matching_sequences
 
+
 class TestMain(unittest.TestCase):
+    """
+    Test suite for the find_matching_sequences function.
+    """
+
     def test_main_1(self):
+        """
+        Test case with a specific matrix and daemons.
+        """
         matrix = [
             ['1C', 'BD', '1C', '55', 'E9'],
             ['1C', '1C', '55', '7A', '1C'],
@@ -20,6 +31,9 @@ class TestMain(unittest.TestCase):
         find_matching_sequences(matrix, daemons, buffer_size)
 
     def test_main_2(self):
+        """
+        Another test case with a different matrix and daemons.
+        """
         matrix = [
             ["BD", "E9", "1C", "BD", "BD"],
             ["1C", "1C", "BD", "BD", "55"],

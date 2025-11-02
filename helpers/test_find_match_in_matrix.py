@@ -1,8 +1,15 @@
+"""
+Unit tests for the find_match_in_matrix module.
+"""
 import unittest
-from find_match_in_matrix import find_sequence_path
+from helpers.find_match_in_matrix import find_sequence_path
 
 
 class TestFindSequencePath(unittest.TestCase):
+    """
+    Test suite for the find_sequence_path function.
+    """
+
     def test_simple_path(self):
         """Test a simple path that can be found in the matrix."""
         matrix = [
