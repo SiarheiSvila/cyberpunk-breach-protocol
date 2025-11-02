@@ -1,5 +1,5 @@
 import unittest
-from main import find_matching_sequences
+from main import find_matching_sequences, find_minimum_cover
 
 
 class TestMain(unittest.TestCase):
@@ -36,6 +36,44 @@ class TestMain(unittest.TestCase):
         ]
         buffer_size = 6
         find_matching_sequences(matrix, daemons, buffer_size)
+
+class TestFindMinimumCover(unittest.TestCase):
+    def test_find_minimum_cover_perfect_cover(self):
+        found_sequences = {
+            (0,): {"sequence": ["1C", "BD"], "path": []},
+            (1, 2): {"sequence": ["BD", "55", "E9"], "path": []}
+        }
+        num_daemons = 3
+
+        expected_cover = [
+            ((0,), {"sequence": ["1C", "BD"], "path": []}),
+            ((1, 2), {"sequence": ["BD", "55", "E9"], "path": []})
+        ]
+
+        result = find_minimum_cover(found_sequences, num_daemons)
+        self.assertCountEqual(result, expected_cover)
+
+    def test_find_minimum_cover_partial_cover(self):
+        found_sequences = {
+            (0,): {"sequence": ["1C", "BD"], "path": []},
+            (1,): {"sequence": ["BD", "55"], "path": []}
+        }
+        num_daemons = 3
+
+        expected_cover = [
+            ((0,), {"sequence": ["1C", "BD"], "path": []}),
+            ((1,), {"sequence": ["BD", "55"], "path": []})
+        ]
+
+        result = find_minimum_cover(found_sequences, num_daemons)
+        self.assertCountEqual(result, expected_cover)
+
+    def test_find_minimum_cover_empty(self):
+        found_sequences = {}
+        num_daemons = 3
+
+        result = find_minimum_cover(found_sequences, num_daemons)
+        self.assertEqual(result, [])
 
 if __name__ == "__main__":
     unittest.main()
